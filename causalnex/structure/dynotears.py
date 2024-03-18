@@ -211,15 +211,23 @@ def from_numpy_dynamic(  # pylint: disable=too-many-arguments
     p_orders = Xlags.shape[1] // d_vars
 
     bnds_w = 2 * [
-        (0, 0)
-        if i == j
-        else (0, 0)
-        if tabu_edges is not None and (0, i, j) in tabu_edges
-        else (0, 0)
-        if tabu_parent_nodes is not None and i in tabu_parent_nodes
-        else (0, 0)
-        if tabu_child_nodes is not None and j in tabu_child_nodes
-        else (0, None)
+        (
+            (0, 0)
+            if i == j
+            else (
+                (0, 0)
+                if tabu_edges is not None and (0, i, j) in tabu_edges
+                else (
+                    (0, 0)
+                    if tabu_parent_nodes is not None and i in tabu_parent_nodes
+                    else (
+                        (0, 0)
+                        if tabu_child_nodes is not None and j in tabu_child_nodes
+                        else (0, None)
+                    )
+                )
+            )
+        )
         for i in range(d_vars)
         for j in range(d_vars)
     ]
@@ -229,13 +237,19 @@ def from_numpy_dynamic(  # pylint: disable=too-many-arguments
         bnds_a.extend(
             2
             * [
-                (0, 0)
-                if tabu_edges is not None and (k, i, j) in tabu_edges
-                else (0, 0)
-                if tabu_parent_nodes is not None and i in tabu_parent_nodes
-                else (0, 0)
-                if tabu_child_nodes is not None and j in tabu_child_nodes
-                else (0, None)
+                (
+                    (0, 0)
+                    if tabu_edges is not None and (k, i, j) in tabu_edges
+                    else (
+                        (0, 0)
+                        if tabu_parent_nodes is not None and i in tabu_parent_nodes
+                        else (
+                            (0, 0)
+                            if tabu_child_nodes is not None and j in tabu_child_nodes
+                            else (0, None)
+                        )
+                    )
+                )
                 for i in range(d_vars)
                 for j in range(d_vars)
             ]

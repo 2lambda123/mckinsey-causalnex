@@ -254,7 +254,7 @@ class ExpandColumnsMixin:
         # handle 1.
         new_tabu_edges = []
         # for each original tabu pair
-        for (i, j) in tabu_edges:
+        for i, j in tabu_edges:
             # idx_group[0] is the original column index
             if i == idx_group[0]:
                 new_tabu_edges += [(idx, j) for idx in idx_group[1:]]

@@ -114,9 +114,9 @@ def count_unique_rows(data: pd.DataFrame, placeholder: float = -np.inf) -> pd.Da
     cols = list(data.columns)
 
     if "count" not in data.columns:
-        data[
-            "count"
-        ] = 1  # Add a dummy count column to ensure that agg_data has non-empty columns
+        data["count"] = (
+            1  # Add a dummy count column to ensure that agg_data has non-empty columns
+        )
 
     agg_data = data.groupby(cols).sum().reset_index()
     agg_data.replace(placeholder, np.nan, inplace=True)

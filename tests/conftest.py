@@ -304,23 +304,25 @@ def create_cpds(data, pc=0):
             [
                 (
                     (
-                        len(
-                            df[
-                                (df["c"] == c)
-                                & (df["b"] == b)
-                                & (df["d"] == d)
-                                & (df["e"] == e)
-                            ]
+                        (
+                            len(
+                                df[
+                                    (df["c"] == c)
+                                    & (df["b"] == b)
+                                    & (df["d"] == d)
+                                    & (df["e"] == e)
+                                ]
+                            )
+                            + pc
                         )
-                        + pc
+                        / (
+                            len(df[(df["b"] == b) & (df["d"] == d) & (df["e"] == e)])
+                            + (pc * len(df_vals["c"]))
+                        )
                     )
-                    / (
-                        len(df[(df["b"] == b) & (df["d"] == d) & (df["e"] == e)])
-                        + (pc * len(df_vals["c"]))
-                    )
+                    if not df[(df["b"] == b) & (df["d"] == d) & (df["e"] == e)].empty
+                    else (1 / len(df_vals["c"]))
                 )
-                if not df[(df["b"] == b) & (df["d"] == d) & (df["e"] == e)].empty
-                else (1 / len(df_vals["c"]))
                 for b in df_vals["b"]
                 for d in df_vals["d"]
                 for e in df_vals["e"]

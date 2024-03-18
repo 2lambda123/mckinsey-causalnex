@@ -160,15 +160,23 @@ def from_numpy(
 
     # Flip i and j because Pytorch flattens the vector in another direction
     bnds = [
-        (0, 0)
-        if i == j
-        else (0, 0)
-        if tabu_edges is not None and (i, j) in tabu_edges
-        else (0, 0)
-        if tabu_parent_nodes is not None and i in tabu_parent_nodes
-        else (0, 0)
-        if tabu_child_nodes is not None and j in tabu_child_nodes
-        else (None, None)
+        (
+            (0, 0)
+            if i == j
+            else (
+                (0, 0)
+                if tabu_edges is not None and (i, j) in tabu_edges
+                else (
+                    (0, 0)
+                    if tabu_parent_nodes is not None and i in tabu_parent_nodes
+                    else (
+                        (0, 0)
+                        if tabu_child_nodes is not None and j in tabu_child_nodes
+                        else (None, None)
+                    )
+                )
+            )
+        )
         for j in range(d)
         for _ in range(hidden_layer_bnds)
         for i in range(d)
