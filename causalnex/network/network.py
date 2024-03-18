@@ -634,9 +634,11 @@ class BayesianNetwork:
         cpd = self.cpds[node]
 
         transformed_data[f"{node}_prediction"] = transformed_data.apply(
-            lambda row: cpd[tuple(row[parent] for parent in parents)].idxmax()
-            if parents
-            else cpd[""].idxmax(),
+            lambda row: (
+                cpd[tuple(row[parent] for parent in parents)].idxmax()
+                if parents
+                else cpd[""].idxmax()
+            ),
             axis=1,
         )
         return transformed_data[[node + "_prediction"]]
