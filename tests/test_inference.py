@@ -470,7 +470,7 @@ class TestInferenceEngineDiscrete:
         for node in original_margs.keys():
             dict_left = original_margs[node]
             dict_right = reset_margs[node]
-            for (kl, kr) in zip(dict_left.keys(), dict_right.keys()):
+            for kl, kr in zip(dict_left.keys(), dict_right.keys()):
                 assert math.isclose(dict_left[kl], dict_right[kr])
 
         # repeating above tests intervening on b, so that there is one single
@@ -498,5 +498,5 @@ class TestInferenceEngineDiscrete:
         for node in original_margs.keys():
             dict_left = original_margs[node]
             dict_right = reset_margs[node]
-            for (kl, kr) in zip(dict_left.keys(), dict_right.keys()):
+            for kl, kr in zip(dict_left.keys(), dict_right.keys()):
                 assert math.isclose(dict_left[kl], dict_right[kr])

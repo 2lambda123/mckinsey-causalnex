@@ -305,11 +305,15 @@ class NotearsMLP(nn.Module, BaseEstimator):
                 flatten gradient vector in numpy form
             """
             views = [
-                p.data.new(p.data.numel()).zero_()
-                if p.grad is None
-                else p.grad.data.to_dense().view(-1)
-                if p.grad.data.is_sparse
-                else p.grad.data.view(-1)
+                (
+                    p.data.new(p.data.numel()).zero_()
+                    if p.grad is None
+                    else (
+                        p.grad.data.to_dense().view(-1)
+                        if p.grad.data.is_sparse
+                        else p.grad.data.view(-1)
+                    )
+                )
                 for p in params
             ]
             return torch.cat(views, 0).cpu().detach().numpy()
