@@ -105,15 +105,23 @@ def from_numpy(
     _assert_all_finite(X)
 
     bnds = [
-        (0, 0)
-        if i == j
-        else (0, 0)
-        if tabu_edges is not None and (i, j) in tabu_edges
-        else (0, 0)
-        if tabu_parent_nodes is not None and i in tabu_parent_nodes
-        else (0, 0)
-        if tabu_child_nodes is not None and j in tabu_child_nodes
-        else (None, None)
+        (
+            (0, 0)
+            if i == j
+            else (
+                (0, 0)
+                if tabu_edges is not None and (i, j) in tabu_edges
+                else (
+                    (0, 0)
+                    if tabu_parent_nodes is not None and i in tabu_parent_nodes
+                    else (
+                        (0, 0)
+                        if tabu_child_nodes is not None and j in tabu_child_nodes
+                        else (None, None)
+                    )
+                )
+            )
+        )
         for i in range(d)
         for j in range(d)
     ]
@@ -167,15 +175,23 @@ def from_numpy_lasso(
     _assert_all_finite(X)
 
     bnds = [
-        (0, 0)
-        if i == j
-        else (0, 0)
-        if tabu_edges is not None and (i, j) in tabu_edges
-        else (0, 0)
-        if tabu_parent_nodes is not None and i in tabu_parent_nodes
-        else (0, 0)
-        if tabu_child_nodes is not None and j in tabu_child_nodes
-        else (0, None)
+        (
+            (0, 0)
+            if i == j
+            else (
+                (0, 0)
+                if tabu_edges is not None and (i, j) in tabu_edges
+                else (
+                    (0, 0)
+                    if tabu_parent_nodes is not None and i in tabu_parent_nodes
+                    else (
+                        (0, 0)
+                        if tabu_child_nodes is not None and j in tabu_child_nodes
+                        else (0, None)
+                    )
+                )
+            )
+        )
         for i in range(d)
         for j in range(d)
     ] * 2
@@ -532,9 +548,7 @@ def _learn_structure_lasso(
         while (rho < 1e20) and (h_new > 0.25 * h_val or h_new == np.inf):
             sol = sopt.minimize(_func, w_est, method="L-BFGS-B", jac=_grad, bounds=bnds)
             w_new = sol.x
-            h_new = _h(
-                w_new[: d**2].reshape([d, d]) - w_new[d**2 :].reshape([d, d])
-            )
+            h_new = _h(w_new[: d**2].reshape([d, d]) - w_new[d**2 :].reshape([d, d]))
             if h_new > 0.25 * h_val:
                 rho *= 10
 

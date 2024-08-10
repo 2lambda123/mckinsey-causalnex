@@ -304,7 +304,7 @@ class DAGBase(
         edges = pd.Series(index=self._features)
 
         # iterate over all edges
-        for (i, j, w) in self.graph_.edges(data=data):
+        for i, j, w in self.graph_.edges(data=data):
             # for edges directed towards the "name" node
             if j == name:
                 # insert the weight into the series

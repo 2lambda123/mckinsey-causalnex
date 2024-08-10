@@ -845,7 +845,8 @@ class TestGenerateStationaryDynamicStructureAndSamples:
         """dense network are more likely to be non stationary. we check that the simulator is still able to provide a
         stationary time-deries in that case.
 
-        If df contain only ones it means that the generator failed to obtain a stationary structure"""
+        If df contain only ones it means that the generator failed to obtain a stationary structure
+        """
         np.random.seed(4)
         _, df, _, _ = gen_stationary_dyn_net_and_df(
             n_samples=1000,
